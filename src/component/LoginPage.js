@@ -2,7 +2,6 @@ import { useFormik } from "formik";
 import React, { useContext, useState } from "react";
 import data from "../DataBase/data.json";
 import { signUpErrHandle } from "../schemas";
-import { Link } from "react-router-dom";
 import { UserContext } from "../App";
 
 const initialValues = {
@@ -14,22 +13,15 @@ const initialValues = {
 
 const LoginPage = () => {
 	const { state, dispatch } = useContext(UserContext);
-	console.log(state);
-
-	// const [saveData, setSaveData] = useState(state);
 	const { handleChange, values, errors, handleSubmit, touched } = useFormik({
 		initialValues: initialValues,
 		validationSchema: signUpErrHandle,
 		onSubmit: (values, action) => {
-			console.log("sasasa");
-
 			dispatch({
 				type: "SIGNUP",
 				payload: values,
 			});
 			action.resetForm();
-			// setSaveData([...saveData, values]);
-
 			data.push(
 				values[
 					{
@@ -43,26 +35,6 @@ const LoginPage = () => {
 			console.log("value", values);
 		},
 	});
-	// console.log("saveData", saveData);
-	// const [signUp, setSignUp] = useState({
-	// 	firstName: "",
-	// 	lastName: "",
-	// 	emailId: "",
-	// 	passWord: "",
-	// });
-	// const [signUpData, setSignUpData] = useState([]);
-
-	// const handleInput = (e) => {
-	// 	const name = e.target.name;
-	// 	const value = e.target.value;
-	// 	setSignUp({ ...signUp, [name]: value });
-	// };
-
-	// const handleSignUp = (e) => {
-	// 	e.preventDefault();
-	// 	setSignUpData([...signUpData, signUp]);
-	// };
-	// console.log("signUpData", signUpData);
 
 	return (
 		<div>

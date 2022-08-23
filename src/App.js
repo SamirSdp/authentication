@@ -26,7 +26,6 @@ const reducer = (state, action) => {
 	}
 };
 
-
 function App() {
 	const [state, dispatch] = React.useReducer(reducer, initialState);
 	return (
