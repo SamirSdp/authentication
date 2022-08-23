@@ -6,12 +6,36 @@ import HomePage from "./pages/HomePage";
 
 export const UserContext = createContext();
 
-function App(props) {
-	const [saveData, setSaveData] = React.useState([]);
+const initialState = {
+	currentUser: null,
+	user: [],
+};
 
+const reducer = (state, action) => {
+	console.log("payload", action.payload);
+	switch (action.type) {
+		case "SIGNUP":
+			return {
+				...state,
+				user: [...state.user, action.payload],
+				currentUser: action.payload,
+			};
+
+		default:
+			return state;
+	}
+};
+
+
+function App() {
+	const [state, dispatch] = React.useReducer(reducer, initialState);
 	return (
 		<div>
-			<UserContext.Provider value={[saveData, setSaveData]}>
+			<UserContext.Provider
+				value={{
+					state,
+					dispatch,
+				}}>
 				<NavBar />
 				<BrowserRouter>
 					<Routes>

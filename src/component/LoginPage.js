@@ -1,8 +1,9 @@
 import { useFormik } from "formik";
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import data from "../DataBase/data.json";
 import { signUpErrHandle } from "../schemas";
 import { Link } from "react-router-dom";
+import { UserContext } from "../App";
 
 const initialValues = {
 	firstName: "",
@@ -12,14 +13,23 @@ const initialValues = {
 };
 
 const LoginPage = () => {
-	const [saveData, setSaveData] = useState([]);
-	
+	const { state, dispatch } = useContext(UserContext);
+	console.log(state);
+
+	// const [saveData, setSaveData] = useState(state);
 	const { handleChange, values, errors, handleSubmit, touched } = useFormik({
 		initialValues: initialValues,
 		validationSchema: signUpErrHandle,
 		onSubmit: (values, action) => {
+			console.log("sasasa");
+
+			dispatch({
+				type: "SIGNUP",
+				payload: values,
+			});
 			action.resetForm();
-			setSaveData([...saveData, values]);
+			// setSaveData([...saveData, values]);
+
 			data.push(
 				values[
 					{
@@ -125,13 +135,11 @@ const LoginPage = () => {
 						</div>
 						<div className="flex justify-evenly mt-2">
 							<div className="mb-2">
-								<Link to="/home">
-									<button
-										type="submit"
-										className="text-green-800 m-auto px-2 bg-white border-0 py-1  focus:outline-none hover:bg-green-600 hover:text-white rounded text-lg">
-										Sign in
-									</button>
-								</Link>
+								<button
+									type="submit"
+									className="text-green-800 m-auto px-2 bg-white border-0 py-1  focus:outline-none hover:bg-green-600 hover:text-white rounded text-lg">
+									Sign in
+								</button>
 							</div>
 						</div>
 						<a
